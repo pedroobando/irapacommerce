@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 
 import { LoginPage } from './views/public/LoginPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import { adminRoutes, publicRoutes, authRoutes } from './routes';
 // import { iRouteProps } from './routes/interface';

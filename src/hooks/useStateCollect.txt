@@ -1,0 +1,84 @@
+// TODO: Adaptarlo para que funcione sin firebase
+
+import { DocumentReference, QuerySnapshot } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+
+interface iUseDataState<KID> {
+  initialValues: KID;
+  newService: (values: KID) => Promise<DocumentReference<KID> | undefined>;
+  updateService: (values: KID) => Promise<KID | undefined>;
+  delService: (keyId: string, recordData: any) => Promise<string | undefined>;
+  readServices(): Promise<QuerySnapshot<KID>>;
+}
+
+export const useDataState = <KID>({
+  initialValues,
+  newService,
+  updateService,
+  readServices,
+  delService,
+}: iUseDataState<KID>) => {
+  const [snapService, setSnapService] = useState<KID[]>();
+  const [recordEdit, setRecordEdit] = useState<KID>(initialValues);
+  const [btnStatus, setBtnStatus] = useState('CREAR');
+
+  useEffect(() => {
+    readServices().then((collServ) => {
+      let collService: any[] = [];
+      collServ.forEach((doc) => {
+        collService = [...collService, { ...doc.data(), id: doc.id }];
+      });
+      setSnapService([...collService]);
+    });
+
+    return () => {
+      setSnapService([]);
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  const buttonAction = async (values: KID, fileupload?: any) => {
+    if (btnStatus === 'CREAR') {
+      newService(values).then((newCollection) =>
+        setSnapService((collSnap) => [{ ...values, id: newCollection!.id }, ...collSnap!]),
+      );
+    } else if (btnStatus === 'ACTUALIZAR') {
+      updateService(values).then((editDoc: any) => {
+        setSnapService((collServ) => [
+          { ...editDoc! },
+          ...collServ!.filter((item: any) => item.id !== editDoc!.id),
+        ]);
+      });
+    }
+    setRecordEdit({ ...initialValues });
+    setBtnStatus('CREAR');
+  };
+
+  const buttonDelete = async (keyId: string) => {
+    const recordData = snapService?.find((item: any) => item!.id === keyId);
+    delService(keyId, recordData).then((keyValue) => {
+      setSnapService((collServ) => [...collServ!.filter((item: any) => item!.id !== keyValue)]);
+    });
+  };
+
+  const buttonReset = (dataInit: KID) => {
+    setRecordEdit({ ...initialValues, ...dataInit });
+    setBtnStatus('CREAR');
+  };
+
+  const buttonEdit = (dataEdit: KID) => {
+    setBtnStatus('ACTUALIZAR');
+    setRecordEdit({ ...dataEdit });
+  };
+
+  return {
+    snapService,
+    setSnapService,
+    buttonAction,
+    buttonReset,
+    buttonEdit,
+    buttonDelete,
+    recordEdit,
+    btnStatus,
+  };
+};
