@@ -20,17 +20,15 @@ export const AppCommerce = () => {
 
 const RouteService = () => {
   const [logged, setLogged] = useState(false);
-  const { doLogged, user } = useContext(AuthContext);
+  const { doLogged } = useContext(AuthContext);
 
   useEffect(() => {
     const retval = doLogged();
-    // console.log(retval);
     setLogged(retval);
     return () => {
       'limpiar';
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token]);
+  }, [doLogged]);
 
   // const [uidUser, setUidUser] = useState('kmduiewrjivjkj-39823');
 

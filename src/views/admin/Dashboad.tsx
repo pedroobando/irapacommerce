@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export const Dashboad = () => {
-  return <div>Dashboad</div>;
+  const { user } = useContext(AuthContext);
+  return (
+    <div>
+      <div>user:{user.decoded.displayName}</div>
+      Dashboad
+    </div>
+  );
 };
