@@ -4,9 +4,8 @@ import { ReactElement } from 'react';
 export interface iAuthContextProps {
   loading: boolean;
   user: iUserStateProps;
-  logged: boolean;
-  // routes?: iRouteProps | [];
-  doLogin: (token: iUserTokenProps) => void;
+  doLogged: () => boolean;
+  doLogin: (token: string) => void;
   doLogout: () => void;
   doLoading: (status: boolean) => void;
   doRegister?: (newuser: iUserRegister) => boolean;
@@ -19,12 +18,9 @@ export interface iUserRegister {
 }
 
 export interface iUserStateProps {
-  logged: boolean;
-  decoded: {
-    uid: string;
-    name: string;
-    email: string;
-  };
+  // logged: boolean;
+  token: string;
+  decoded: iUserTokenProps;
 }
 
 export interface iServiceStateProps {
@@ -38,7 +34,6 @@ export interface iAuthProviderProps {
 }
 
 export interface iUserTokenProps {
-  email: string;
-  name: string;
   uid: string;
+  displayName: string;
 }

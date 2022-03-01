@@ -38,7 +38,7 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
     validationSchema: Yup.object({
       nickName: Yup.string()
         .required('El usuario es requerido')
-        .min(6, 'Debe tener minimo 6 caracteres'),
+        .min(5, 'Debe tener minimo 5 caracteres'),
 
       password: Yup.string()
         .required('El password o contraseña es requerido')

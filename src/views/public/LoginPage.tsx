@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { AUTH_USER } from '../../graphql/dslgql';
+import { fetchgql } from '../../graphql/fetchgql';
+import { useNavigate } from 'react-router-dom';
+// import { useActionGQL } from '../../hooks/useActionGQL';
 
 import { useSEOTitle } from '../../hooks/useSeoPage';
 import { FormLogin } from './components/FormLogin';
 
 const initialValues: any = {
   nickName: 'pedro',
-  password: '',
+  password: '123456',
 };
 
 export const LoginPage = () => {
-  // const { doLogin, loading, doLoading } = useContext(AuthContext);
+  const routNavegate = useNavigate();
 
-  useSEOTitle({ subtitle: 'LOGIN' });
+  const { doLogin } = useContext(AuthContext);
+
+  useSEOTitle({ subtitle: 'login' });
 
   const handleSucces = (value: any): { success: boolean; text: string } => {
-    console.log(value);
-    if (value.nickName !== 'pedroobando') {
-      return { success: false, text: 'Nombre diferente a pedroobando' };
-    }
+    const { nickName, password } = value;
+    // const { data, errors, loading } = useActionGQL(AUTH_USER, { input: { nickName, password } });
+    fetchgql(AUTH_USER, { input: { nickName, password } }, '')
+      .then(({ data: { authenticateToken } }) => {
+        const { token } = authenticateToken;
+        doLogin(token);
+        routNavegate('/admin');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     return { success: true, text: '' };
   };
   // useSEOMeta({

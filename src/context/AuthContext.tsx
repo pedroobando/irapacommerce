@@ -1,6 +1,8 @@
 import { createContext, useReducer } from 'react';
 import { authReducer } from './authReducer';
 
+import jwt_decode from 'jwt-decode';
+
 import {
   iAuthContextProps,
   iAuthProviderProps,
@@ -14,11 +16,11 @@ export const AuthContext = createContext({} as iAuthContextProps);
 const _tokenName = '39sk238xs2';
 
 const user: iUserStateProps = {
-  logged: false,
+  // logged: false,
+  token: '',
   decoded: {
     uid: '',
-    name: '',
-    email: '',
+    displayName: '',
   },
 };
 
@@ -36,33 +38,41 @@ const initlocal = (): iServiceStateProps => {
   };
 };
 
-const retDecodeUser = (payload: iUserTokenProps): iUserStateProps => {
+const retDecodeUser = (payload: string): iUserStateProps => {
+  const decodeToken = jwt_decode<iUserTokenProps>(payload, { header: false });
   return {
-    logged: true,
-    decoded: {
-      uid: payload.uid,
-      name: payload.name,
-      email: payload.email,
-    },
+    // logged: true,
+    token: payload,
+    decoded: { uid: decodeToken.uid, displayName: decodeToken.displayName },
   };
 };
 
 export const AuthProvider = ({ children }: iAuthProviderProps) => {
   const [state, dispatch] = useReducer(authReducer, initialState, initlocal);
 
-  const doLogin = (payload: iUserTokenProps) => {
-    // localStorage.setItem(_tokenName, payload.token);
+  const doLogin = (payload: string) => {
     dispatch({
       type: 'LOGIN',
       payload: retDecodeUser(payload),
     });
+    localStorage.setItem(_tokenName, payload);
   };
 
   const doLogout = () => {
-    // localStorage.removeItem(_tokenName);
+    localStorage.removeItem(_tokenName);
     dispatch({
       type: 'LOGOUT',
     });
+  };
+
+  const doLogged = (): boolean => {
+    try {
+      const decodeToken = jwt_decode<iUserTokenProps>(state.user.token, { header: false });
+      console.log('isLogged');
+      return decodeToken.uid.trim() !== '';
+    } catch (error) {
+      return false;
+    }
   };
 
   const doLoading = (status: boolean) => {
@@ -78,7 +88,7 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
       value={{
         loading: state.loading,
         user: state.user,
-        logged: state.user.logged,
+        doLogged,
         doLogin,
         doLogout,
         doLoading,

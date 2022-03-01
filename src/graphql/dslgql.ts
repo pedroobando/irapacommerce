@@ -13,12 +13,12 @@ const PAGINATE_GQL = `
 `;
 
 export const AUTH_USER_STR = `mutation authenticateToken($input:AuthenticateInput!){
-  authenticateRetToken(input:$input){token}
+  authenticateToken(input:$input){token}
 }`;
 
 export const AUTH_REVALIDATE_STR = `mutation revalidateToken{revalidateToken{token}}`;
 
-export const AUTH_USUARIO = `
+export const AUTH_USER = `
   ${AUTH_USER_STR}
 `;
 

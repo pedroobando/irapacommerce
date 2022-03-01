@@ -15,13 +15,12 @@ export const ProtectedRoute = ({
   Component,
   ...args
 }: iProtectedRouteProps) => {
+  console.log(Component);
   return (
     <Route
       {...args}
       path={path}
-      element={(props: any) =>
-        !isAuthenticated ? <Navigate to="/auth/login" /> : <Component {...props} />
-      }
+      element={(props: any) => (!isAuthenticated ? <Navigate to="/" /> : <Component {...props} />)}
     />
   );
 };
