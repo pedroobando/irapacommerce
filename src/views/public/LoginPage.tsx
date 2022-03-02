@@ -20,20 +20,23 @@ export const LoginPage = () => {
 
   useSEOTitle({ subtitle: 'login' });
 
+  //TODO: Arreglar esto manana y transformalo a una funcion asicrona
   const handleSucces = (value: any): { success: boolean; text: string } => {
     const { nickName, password } = value;
 
     fetchgql(AUTH_USER, { input: { nickName, password } }, '')
-      .then(({ data: { authenticateToken } }) => {
-        const { token } = authenticateToken;
-        doLogin(token);
-        routNavegate('/');
+      .then(({ data: { authenticateToken }, errors }) => {
+        if (errors) {
+          return { success: false, text: errors[0].message };
+        } else {
+          const { token } = authenticateToken;
+          doLogin(token);
+          routNavegate('/');
+          return { success: true, text: '' };
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return { success: true, text: '' };
+      .catch((err) => {});
+    console.log('first');
   };
 
   return (

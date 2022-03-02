@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -48,67 +48,78 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
   });
 
   return (
-    <div className="container">
-      <form
-        noValidate
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-        className="border border-2 rounded border-secondary p-4 my-4">
-        <h3 className="mt-1 mb-2 text-secondary text-center uppercase">Login o Acceso</h3>
-        <hr />
-        <div
-          className={!errorMessage.success ? 'my-2 alert alert-danger alert px-2' : 'd-none'}
-          role={'alert'}>
-          {errorMessage.text}
-        </div>
+    <div className="h-screen">
+      <div className="h-full bg-slate-50 py-4 ">
+        <form
+          noValidate
+          onSubmit={handleSubmit}
+          onReset={handleReset}
+          className="border-2 border-solid border-slate-500 mx-auto w-11/12 flex-1 p-6 lg:w-4/5 rounded-lg shadow-xl">
+          <h3 className="uppercase text-gray-500 font-bold text-center text-2xl mb-2">
+            Login o Acceso
+          </h3>
+          <hr />
+          <div
+            className={
+              !errorMessage.success
+                ? 'my-2 px-2 bg-red-200 text-base rounded border-2 border-solid border-red-400'
+                : 'hidden'
+            }
+            role="alert">
+            {errorMessage.text}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="nickName" className="form-label">
-            Usuario
-          </label>
-          <input
-            id="nickName"
-            {...getFieldProps('nickName')}
-            type="text"
-            className="form-control"
-            placeholder="wilkemberramon"
-          />
-          {touched.nickName && errors.nickName && (
-            <div className="mt-2 alert alert-warning alert-sm px-2 py-1" role={'alert'}>
-              * {errors.nickName}
-            </div>
-          )}
-        </div>
+          <div className="mb-3 w-full py-2">
+            <label htmlFor="nickName" className="text-base uppercase">
+              Usuario
+            </label>
+            <input
+              id="nickName"
+              {...getFieldProps('nickName')}
+              type="text"
+              className="w-full border-[1px] border-solid rounded border-slate-500 mt-2 px-4 py-2 text-base bg-slate-50 focus:border-purple-850 focus:bg-blacklt focus:text-black focus:placeholder:text-white"
+              placeholder="wilkemberramon"
+            />
+            {touched.nickName && errors.nickName && (
+              <div className="mt-2 alert alert-warning alert-sm px-2 py-1" role={'alert'}>
+                * {errors.nickName}
+              </div>
+            )}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Contraseña o password
-          </label>
-          <input
-            id="password"
-            {...getFieldProps('password')}
-            type="password"
-            placeholder="Password"
-            className="form-control"
-          />
-          {touched.password && errors.password && (
-            <div className="mt-2 alert alert-warning alert-sm px-2 py-1">* {errors.password}</div>
-          )}
-        </div>
+          <div className="mb-3 w-full py-2">
+            <label htmlFor="password" className="uppercase">
+              Contraseña o password
+            </label>
+            <input
+              id="password"
+              {...getFieldProps('password')}
+              type="password"
+              placeholder="Password"
+              className="w-full border-[1px] border-solid rounded border-slate-500 mt-2 px-4 py-2 text-base bg-slate-50 focus:border-purple-850 focus:bg-blacklt focus:text-black focus:placeholder:text-white"
+            />
+            {touched.password && errors.password && (
+              <div className="mt-1 text-black bg-yellow-100 py-1 px-2 rounded">
+                * {errors.password}
+              </div>
+            )}
+          </div>
 
-        <div className="row justify-content-evenly">
-          <div className="d-grid col-6">
-            <button type="submit" className="btn btn-success">
+          <div className="flex justify-between gap-2">
+            <button
+              type="submit"
+              className="w-[45%] border-solid border-2 bg-blue-400 px-4 py-2 rounded-lg uppercase text-sm hover:bg-blue-500">
               Login
             </button>
-          </div>
-          <div className="d-grid col-6">
-            <button type="reset" className=" btn btn-warning">
+
+            <button
+              type="reset"
+              className="w-[45%] border-solid border-2 border-yellow-400 bg-transparent px-4 py-2 rounded-lg uppercase text-sm">
               Reset
             </button>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

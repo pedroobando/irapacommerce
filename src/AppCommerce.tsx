@@ -4,7 +4,6 @@ import { AuthContext, AuthProvider } from './context/AuthContext';
 
 import { LoginPage } from './views/public/LoginPage';
 import { Dashboad } from './views/admin/Dashboad';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductPage } from './views/admin/ProductPage';
 
 export const AppCommerce = () => {
