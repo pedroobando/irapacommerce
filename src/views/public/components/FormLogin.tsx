@@ -14,7 +14,7 @@ interface iSuccessMessage {
 
 interface iFormLoginProps {
   initValues: iFieldLogin;
-  handleSucces: (values: iFieldLogin) => iSuccessMessage;
+  handleSucces: (values: iFieldLogin) => Promise<iSuccessMessage>;
 }
 
 const initialValuesError = { success: true, text: '' };
@@ -25,13 +25,15 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
   const { resetForm, handleSubmit, errors, touched, getFieldProps, handleReset } = useFormik({
     initialValues: { ...initValues },
     onSubmit: (values) => {
-      const nick = values.nickName.trim().toLowerCase();
-      const retSuccess = handleSucces({ ...values, nickName: nick });
-      if (!retSuccess.success) {
-        setErrorMessage({ ...retSuccess });
-      } else {
-        resetForm();
-      }
+      handleSucces({ ...values, nickName: values.nickName.trim().toLowerCase() }).then(
+        (retSuccess) => {
+          if (!retSuccess.success) {
+            setErrorMessage({ ...retSuccess });
+          } else {
+            resetForm();
+          }
+        },
+      );
     },
     onReset: (values) => {
       setErrorMessage(initialValuesError);
@@ -62,7 +64,7 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
           <div
             className={
               !errorMessage.success
-                ? 'my-2 px-2 bg-red-200 text-base rounded border-2 border-solid border-red-400'
+                ? 'my-2 px-2 py-2 bg-red-50 text-center text-lg rounded border-2 border-solid border-red-200'
                 : 'hidden'
             }
             role="alert">
