@@ -7,17 +7,17 @@ import { iLayoutProps } from '../interface/interface';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-const AdminLayout = ({ children }: iLayoutProps) => {
+const AdminLayout = ({ children, className }: iLayoutProps) => {
   const { doLogout, user } = useContext(AuthContext);
   return (
-    <div className={styles.container}>
+    <div className={styles.appcontainer}>
       <Navbar
         navigationData={navigationData}
         displayName={user.decoded.displayName}
         closeApp={doLogout}
       />
       <Tabbar navigationData={navigationData} />
-      <div className={styles.devLogo}>{children}</div>
+      <div className={className}>{children}</div>
     </div>
   );
 };

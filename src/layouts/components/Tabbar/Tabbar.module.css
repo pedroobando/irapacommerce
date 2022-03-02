@@ -1,13 +1,13 @@
 .tabbar {
-  @apply flex md:hidden flex-row items-center justify-around px-8 h-16 bg-white visible md:invisible fixed bottom-0 w-full rounded-t-3xl text-2xl;
+  @apply fixed bottom-0 flex flex-row items-center justify-around visible w-full h-16 px-8 text-2xl bg-white md:hidden md:invisible rounded-t-3xl;
 }
 
 .tabItem {
-  @apply text-gray-400 hover:text-gray-700 cursor-pointer w-16 h-full flex items-center justify-center;
+  @apply flex items-center justify-center w-16 h-full text-gray-400 cursor-pointer hover:text-gray-700;
 }
 
 .tabItemActive {
-  @apply bg-gradient-to-t from-white to-gray-100 border-t-2 border-gray-700 text-gray-700;
+  @apply text-gray-700 border-t-2 border-gray-700 bg-gradient-to-t from-white to-gray-100;
 }
 
 .icon {

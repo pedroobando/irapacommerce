@@ -43,17 +43,6 @@ const Tabbar = ({ navigationData }: iTabbarProps) => {
           }>
           <span className={styles.icon}>{getTabIcon(item.name)}</span>
         </NavLink>
-
-        // <Link
-        //   to={item.to}
-        //   key={index}
-        //   className={classNames([
-        //     styles.tabItem,
-        //     currentRoute === item.name && styles.tabItemActive,
-        //   ])}
-        //   onClick={() => setCurrentRoute(item.name)}>
-        //   <span className={styles.icon}>{getTabIcon(item.name)}</span>
-        // </Link>
       ))}
     </nav>
   );

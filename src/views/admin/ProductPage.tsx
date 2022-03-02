@@ -5,6 +5,7 @@ import { GET_PRODUCTS } from '../../graphql/dslgql';
 import { fetchgqlAsc } from '../../graphql/fetchgql';
 import { useStateCollect } from '../../hooks/useStateCollect';
 import AdminLayout from '../../layouts/admin/AdminLayout';
+import { FormProduct } from './components/FormProduct';
 
 interface iProductProps {
   id: string;
@@ -94,8 +95,16 @@ export const ProductPage = () => {
   // console.log(snapService);
 
   return (
-    <AdminLayout className="container">
-      <h3 className="mt-1 text-primary">Productos</h3>
+    <AdminLayout className="container mx-auto md:mx-10">
+      <h3 className="flex justify-between px-2 py-1 text-white uppercase bg-blue-400 md:font-bold md:text-blue-400 md:bg-transparent">
+        <span className="text-xl">Productos</span>
+        <button className="px-2 py-0 text-sm border-2 border-white border-solid rounded md:inline md:border-blue-400">
+          NUEVO
+        </button>
+      </h3>
+
+      <FormProduct />
+
       <ul className="">
         {snapService?.map(({ id, productName }, idx) => (
           <li key={idx} className="list-group-item">
