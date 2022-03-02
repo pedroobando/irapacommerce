@@ -27,8 +27,12 @@ export const ProductPage = () => {
 
   const readProduct = async () => {
     const { data, errors } = await fetchgqlAsc(GET_PRODUCTS, {}, user.token);
-    const { getProducts } = data;
-    return getProducts;
+    if (!errors) {
+      const { getProducts } = data;
+      return getProducts;
+    } else {
+      return [];
+    }
   };
 
   const newProduct = async (values: iProductProps) => {
@@ -87,22 +91,18 @@ export const ProductPage = () => {
 
   //  {snapService && snapService?.map((item, idx) => <div key={idx}>{item.productName!}</div>)}
 
-  console.log(snapService);
+  // console.log(snapService);
 
   return (
     <AdminLayout className="container">
-      <div className="row">
-        <h4 className="mt-1 text-primary">Productos</h4>
-      </div>
-      <div className="row">
-        <ul className="list-group">
-          {snapService?.map(({ id, productName }, idx) => (
-            <li key={idx} className="list-group-item">
-              {productName!}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h3 className="mt-1 text-primary">Productos</h3>
+      <ul className="">
+        {snapService?.map(({ id, productName }, idx) => (
+          <li key={idx} className="list-group-item">
+            {productName!}
+          </li>
+        ))}
+      </ul>
     </AdminLayout>
   );
 };

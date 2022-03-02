@@ -37,8 +37,10 @@ export const LoginPage = () => {
   };
 
   return (
-    <div>
-      <FormLogin initValues={initialValues} handleSucces={handleSuccess} />
+    <div className="bg-gray-100 h-screen">
+      <div className="flex items-center justify-center h-5/6 w-10/12 mx-auto">
+        <FormLogin initValues={initialValues} handleSucces={handleSuccess} />
+      </div>
     </div>
   );
 };

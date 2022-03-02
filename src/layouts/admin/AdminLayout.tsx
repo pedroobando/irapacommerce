@@ -1,51 +1,23 @@
-// import { useContext } from 'react';
-// import { AuthContext } from '../../context/AuthContext';
-// import { iLayoutProps } from '../interface/interface';
-// import { AdminNavbar } from './AdminNavbar';
-// // import { AdminSidebar } from './AdminSidebar';
-
-// const AdminLayout = ({ children, className = '' }: iLayoutProps) => {
-//   const { user } = useContext(AuthContext);
-//   const displayName = user.decoded.displayName;
-
-//   return (
-//     <>
-//       <AdminNavbar displayName={displayName} imagenUrl={'/image/commerce.png'} />
-//       <div className={className}>{children}</div>
-//     </>
-//   );
-// };
-
-// export default AdminLayout;
-
-import React from 'react';
-import { FaDev } from 'react-icons/fa';
-
 import styles from './AdminLayout.module.css';
-import useNavigation from '../../hooks/useNavigation';
 import navigationData from '../../data/navegation';
 
 import Navbar from '../components/Navbar';
 import Tabbar from '../components/Tabbar';
+import { iLayoutProps } from '../interface/interface';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
-const AdminLayout = () => {
-  const { currentRoute, setCurrentRoute } = useNavigation();
-
+const AdminLayout = ({ children }: iLayoutProps) => {
+  const { doLogout, user } = useContext(AuthContext);
   return (
     <div className={styles.container}>
       <Navbar
         navigationData={navigationData}
-        currentRoute={currentRoute}
-        setCurrentRoute={setCurrentRoute}
+        displayName={user.decoded.displayName}
+        closeApp={doLogout}
       />
-      <Tabbar
-        navigationData={navigationData}
-        currentRoute={currentRoute}
-        setCurrentRoute={setCurrentRoute}
-      />
-      <div className={styles.devLogo}>
-        <FaDev />
-      </div>
+      <Tabbar navigationData={navigationData} />
+      <div className={styles.devLogo}>{children}</div>
     </div>
   );
 };

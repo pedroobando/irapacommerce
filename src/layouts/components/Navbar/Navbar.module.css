@@ -3,7 +3,7 @@
 }
 
 .logo {
-  @apply text-5xl text-gray-800 -mb-1;
+  @apply text-5xl text-sky-900 -mb-1;
 }
 
 .navItems {
@@ -19,5 +19,5 @@
 }
 
 .actions {
-  @apply bg-white hover:bg-gray-50 border-2 border-gray-900 text-sm text-gray-900 py-3 px-5 rounded-lg font-medium tracking-wide leading-none;
+  @apply bg-white hover:bg-gray-50 border-2 border-gray-700 text-sm text-gray-900 py-2 px-4 rounded-lg font-medium tracking-wide leading-none;
 }

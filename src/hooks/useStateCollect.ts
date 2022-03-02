@@ -22,7 +22,6 @@ export const useStateCollect = <KID>({
   useEffect(() => {
     readServices().then((collServ: any) => {
       let collService: any[] = [];
-      // console.log(collServ);
 
       collServ.forEach((doc: KID) => {
         collService = [...collService, { ...doc }];

@@ -1,33 +1,42 @@
-import { CgMonday } from 'react-icons/cg';
-import classNames from 'classnames';
+import { GiShoppingCart } from 'react-icons/gi';
+import { FaPowerOff } from 'react-icons/fa';
 
 import styles from './Navbar.module.css';
-interface iNavbarProps {
-  navigationData: any;
-  currentRoute: any;
-  setCurrentRoute: any;
+import { NavLink } from 'react-router-dom';
+
+interface iNavDataProps {
+  name: string;
+  to: string;
 }
 
-const Navbar = ({ navigationData, currentRoute, setCurrentRoute }: iNavbarProps) => {
+interface iNavbarProps {
+  navigationData: iNavDataProps[];
+  displayName: string;
+  closeApp: () => void;
+}
+
+const Navbar = ({ navigationData, displayName, closeApp }: iNavbarProps) => {
   return (
     <nav className={styles.navbar}>
       <span className={styles.logo}>
-        <CgMonday />
+        <GiShoppingCart />
       </span>
       <ul className={styles.navItems}>
-        {navigationData.map((item: any, index: any) => (
-          <li
-            className={classNames([
-              styles.navItem,
-              currentRoute === item && styles.selectedNavItem,
-            ])}
-            key={index}
-            onClick={() => setCurrentRoute(item)}>
-            {item}
-          </li>
+        {navigationData.map((item: iNavDataProps, index: any) => (
+          <NavLink
+            to={item.to}
+            className={({ isActive }) =>
+              isActive ? `${styles.selectedNavItem} ${styles.navItem}` : styles.navItem
+            }
+            key={index}>
+            {item.name}
+          </NavLink>
         ))}
       </ul>
-      <button className={styles.actions}>Logout</button>
+      <div className="flex align-middle">
+        <span className="text-gray-400 text-base font-semibold">{displayName}</span>
+        <FaPowerOff className="ml-2 text-red-900 inline text-2xl" onClick={closeApp} />
+      </div>
     </nav>
   );
 };

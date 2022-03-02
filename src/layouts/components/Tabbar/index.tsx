@@ -5,13 +5,18 @@ import { BsFillBagFill, BsFillPersonFill } from 'react-icons/bs';
 import { CgInbox } from 'react-icons/cg';
 
 import styles from './Tabbar.module.css';
-interface iTabbarProps {
-  navigationData: any;
-  currentRoute: any;
-  setCurrentRoute: any;
+import { NavLink } from 'react-router-dom';
+
+interface iNavDataProps {
+  name: string;
+  to: string;
 }
 
-const Tabbar = ({ navigationData, currentRoute, setCurrentRoute }: iTabbarProps) => {
+interface iTabbarProps {
+  navigationData: iNavDataProps[];
+}
+
+const Tabbar = ({ navigationData }: iTabbarProps) => {
   const getTabIcon = useCallback((item) => {
     switch (item) {
       case 'Home':
@@ -29,13 +34,26 @@ const Tabbar = ({ navigationData, currentRoute, setCurrentRoute }: iTabbarProps)
 
   return (
     <nav className={styles.tabbar}>
-      {navigationData.map((item: any, index: any) => (
-        <span
+      {navigationData.map((item: iNavDataProps, index: any) => (
+        <NavLink
+          to={item.to}
           key={index}
-          className={classNames([styles.tabItem, currentRoute === item && styles.tabItemActive])}
-          onClick={() => setCurrentRoute(item)}>
-          <span className={styles.icon}>{getTabIcon(item)}</span>
-        </span>
+          className={({ isActive }) =>
+            isActive ? `${styles.tabItemActive} ${styles.tabItem}` : styles.tabItem
+          }>
+          <span className={styles.icon}>{getTabIcon(item.name)}</span>
+        </NavLink>
+
+        // <Link
+        //   to={item.to}
+        //   key={index}
+        //   className={classNames([
+        //     styles.tabItem,
+        //     currentRoute === item.name && styles.tabItemActive,
+        //   ])}
+        //   onClick={() => setCurrentRoute(item.name)}>
+        //   <span className={styles.icon}>{getTabIcon(item.name)}</span>
+        // </Link>
       ))}
     </nav>
   );
