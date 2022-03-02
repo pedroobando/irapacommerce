@@ -20,7 +20,7 @@ export const authReducer = (
     case 'LOGOUT':
       return {
         ...state,
-        user: { logged: false, decoded: { uid: '', name: '', email: '' } },
+        user: { token: undefined, decoded: { uid: '', displayName: '' } },
       };
 
     case 'LOADING':

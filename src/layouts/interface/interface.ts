@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 export interface iLayoutProps {
+  className?: string;
   children?: ReactElement | ReactElement[];
 }
 

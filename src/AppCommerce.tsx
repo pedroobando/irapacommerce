@@ -1,14 +1,11 @@
-import { Suspense, useEffect, useState, useContext } from 'react';
+import { Suspense, useContext } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 
 import { LoginPage } from './views/public/LoginPage';
 import { Dashboad } from './views/admin/Dashboad';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ProtectedRoute } from './auth/ProtectedRoute';
-
-// import { adminRoutes, publicRoutes, authRoutes } from './routes';
-// import { iRouteProps } from './routes/interface';
+import { ProductPage } from './views/admin/ProductPage';
 
 export const AppCommerce = () => {
   return (
@@ -19,54 +16,19 @@ export const AppCommerce = () => {
 };
 
 const RouteService = () => {
-  const [logged, setLogged] = useState(false);
-  const { doLogged } = useContext(AuthContext);
-
-  useEffect(() => {
-    const retval = doLogged();
-    setLogged(retval);
-    return () => {
-      'limpiar';
-    };
-  }, [doLogged]);
-
-  // const [uidUser, setUidUser] = useState('kmduiewrjivjkj-39823');
-
-  // useEffect(() => {
-  //   // console.log(user.decoded.uid, uidUser);
-  //   if (user.decoded.uid !== uidUser) {
-  //     // if (user.uid) {
-  //     //   doLogin({ uid: user.uid, email: user.email, name: user.displayName });
-  //     //   if (user.email === 'servidentmjco@gmail.com') {
-  //     //     setRouteState([...adminRoutes]);
-  //     //   } else {
-  //     //     setRouteState([...authRoutes]);
-  //     //   }
-  //     // } else {
-  //     //   setRouteState([...publicRoutes]);
-  //     // }
-  //   }
-  //   // setUidUser(user.decoded.uid);
-
-  //   return () => {
-  //     console.log('limpiar');
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [uidUser, user.decoded.uid]);
-
-  // if (uidUser !== user.decoded.uid) {
-  //   return <h1>Loading User</h1>;
-  // }
+  const { user } = useContext(AuthContext);
 
   return (
     <Suspense fallback={<span>loading..</span>}>
       <BrowserRouter>
         <Routes>
-          <Route path="/admin" element={logged ? <Dashboad /> : <Navigate to="/login" replace />} />
-          {/* <ProtectedRoute isAuthenticated={logged} path={'/admin'} Component={Dashboad} /> */}
-          {/* <Route key={path} path={path} element={<Component />} /> */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/*" element={<Navigate to="/login" replace />} />
+          {user.token !== undefined && <Route path="/" element={<Dashboad />} />}
+          {user.token !== undefined && <Route path="/product" element={<ProductPage />} />}
+          {user.token === undefined && (
+            <Route path="/*" element={<Navigate to="/login" replace />} />
+          )}
+          <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

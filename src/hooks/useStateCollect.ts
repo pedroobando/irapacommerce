@@ -1,20 +1,17 @@
-// TODO: Adaptarlo para que funcione sin firebase
-
-import { DocumentReference, QuerySnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 interface iUseDataState<KID> {
   initialValues: KID;
-  newService: (values: KID) => Promise<DocumentReference<KID> | undefined>;
-  updateService: (values: KID) => Promise<KID | undefined>;
+  newService: (values: KID) => Promise<KID | undefined>;
+  updService: (values: KID) => Promise<KID | undefined>;
   delService: (keyId: string, recordData: any) => Promise<string | undefined>;
-  readServices(): Promise<QuerySnapshot<KID>>;
+  readServices(): Promise<KID>;
 }
 
-export const useDataState = <KID>({
+export const useStateCollect = <KID>({
   initialValues,
   newService,
-  updateService,
+  updService,
   readServices,
   delService,
 }: iUseDataState<KID>) => {
@@ -23,10 +20,12 @@ export const useDataState = <KID>({
   const [btnStatus, setBtnStatus] = useState('CREAR');
 
   useEffect(() => {
-    readServices().then((collServ) => {
+    readServices().then((collServ: any) => {
       let collService: any[] = [];
-      collServ.forEach((doc) => {
-        collService = [...collService, { ...doc.data(), id: doc.id }];
+      // console.log(collServ);
+
+      collServ.forEach((doc: KID) => {
+        collService = [...collService, { ...doc }];
       });
       setSnapService([...collService]);
     });
@@ -39,11 +38,11 @@ export const useDataState = <KID>({
 
   const buttonAction = async (values: KID, fileupload?: any) => {
     if (btnStatus === 'CREAR') {
-      newService(values).then((newCollection) =>
-        setSnapService((collSnap) => [{ ...values, id: newCollection!.id }, ...collSnap!]),
+      newService(values).then((newCollection: any) =>
+        setSnapService((collSnap: any) => [{ ...values, id: newCollection.id }, ...collSnap!]),
       );
     } else if (btnStatus === 'ACTUALIZAR') {
-      updateService(values).then((editDoc: any) => {
+      updService(values).then((editDoc: any) => {
         setSnapService((collServ) => [
           { ...editDoc! },
           ...collServ!.filter((item: any) => item.id !== editDoc!.id),

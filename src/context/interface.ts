@@ -1,5 +1,4 @@
 import { ReactElement } from 'react';
-// import { iRouteProps } from '../routes/interface';
 
 export interface iAuthContextProps {
   loading: boolean;
@@ -7,8 +6,8 @@ export interface iAuthContextProps {
   doLogged: () => boolean;
   doLogin: (token: string) => void;
   doLogout: () => void;
-  doLoading: (status: boolean) => void;
-  doRegister?: (newuser: iUserRegister) => boolean;
+  // doLoading: (status: boolean) => void;
+  // doRegister?: (newuser: iUserRegister) => boolean;
 }
 
 export interface iUserRegister {
@@ -19,7 +18,7 @@ export interface iUserRegister {
 
 export interface iUserStateProps {
   // logged: boolean;
-  token: string;
+  token: string | undefined;
   decoded: iUserTokenProps;
 }
 

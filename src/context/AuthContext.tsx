@@ -31,8 +31,11 @@ export const initialState: iServiceStateProps = {
 };
 
 const initlocal = (): iServiceStateProps => {
+  const localState = sessionStorage.getItem(_tokenName) || 'savanadeuchure';
+  const userdecode = localState !== 'savanadeuchure' ? retDecodeUser(localState) : user;
+
   return {
-    user: { ...user },
+    user: { ...userdecode },
     loading: false,
     openDrawer: false,
   };
@@ -55,11 +58,11 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
       type: 'LOGIN',
       payload: retDecodeUser(payload),
     });
-    localStorage.setItem(_tokenName, payload);
+    sessionStorage.setItem(_tokenName, payload);
   };
 
   const doLogout = () => {
-    localStorage.removeItem(_tokenName);
+    sessionStorage.removeItem(_tokenName);
     dispatch({
       type: 'LOGOUT',
     });
@@ -67,21 +70,31 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const doLogged = (): boolean => {
     try {
-      const decodeToken = jwt_decode<iUserTokenProps>(state.user.token, { header: false });
+      const localState = sessionStorage.getItem(_tokenName) || 'savanadeuchure';
+      // console.log(localState);
+      if (localState !== 'savanadeuchure') {
+        dispatch({
+          type: 'LOGIN',
+          payload: retDecodeUser(localState),
+        });
+        return true;
+      }
+      // const decodeToken = jwt_decode<iUserTokenProps>(localState, { header: false });
+      // console.log(decodeToken);
       console.log('isLogged');
-      return decodeToken.uid.trim() !== '';
+      return false;
     } catch (error) {
       return false;
     }
   };
 
-  const doLoading = (status: boolean) => {
-    dispatch({ type: 'LOADING', payload: status });
-  };
+  // const doLoading = (status: boolean) => {
+  //   dispatch({ type: 'LOADING', payload: status });
+  // };
 
-  const doRegister = (newuser: iUserRegister): boolean => {
-    return true;
-  };
+  // const doRegister = (newuser: iUserRegister): boolean => {
+  //   return true;
+  // };
 
   return (
     <AuthContext.Provider
@@ -91,8 +104,8 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
         doLogged,
         doLogin,
         doLogout,
-        doLoading,
-        doRegister,
+        // doLoading,
+        // doRegister,
       }}>
       {children}
     </AuthContext.Provider>

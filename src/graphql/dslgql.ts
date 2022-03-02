@@ -53,21 +53,15 @@ export const NUEVO_USUARIO = `
   }
 `;
 
-const STR_DISPLAY_CONDOMINIO = `{
+const STR_DISPLAY_PRODUCTO = `{
   id
-  name
-  dni
-  email
-  phone
-  address
-  contactName
-  active
-  propertiesCount
-  coinTypeId
-  coinType{
-    coinTypeName
-  }
-  
+  code
+  productName
+  cost
+  price
+  user_at
+  created_at
+  updated_at
 }`;
 
 const STR_DISPLAY_COINTYPES = `{
@@ -77,24 +71,24 @@ const STR_DISPLAY_COINTYPES = `{
   active
 }`;
 
-export const OBTENER_CONDOMINIOS = `
-  query getCondominios {
-    getCondominios 
-      ${STR_DISPLAY_CONDOMINIO}
+export const GET_PRODUCTS = `
+  query getProducts {
+    getProducts
+      ${STR_DISPLAY_PRODUCTO}
   }
 `;
 
 export const OBTENER_UNCONDOMINIO = `
   query getCondominio($id:ID!) {
     getCondominio(id:$id)
-      ${STR_DISPLAY_CONDOMINIO}
+      ${STR_DISPLAY_PRODUCTO}
   }
 `;
 
 export const OBTENER_UNCONDOMINIO_COINTYPE = `
   query getCondominioCoinType($id: ID!,$condid: ID!,$active:Boolean) {
     getCondominio(id: $id) 
-      ${STR_DISPLAY_CONDOMINIO}
+      ${STR_DISPLAY_PRODUCTO}
     
     getCoinTypes(condid: $condid, active: $active)
       ${STR_DISPLAY_COINTYPES}
@@ -104,28 +98,28 @@ export const OBTENER_UNCONDOMINIO_COINTYPE = `
 export const NUEVO_CONDOMINIO = `
   mutation newCondominio($input: CondominioInput!) {
     newCondominio(input: $input) 
-      ${STR_DISPLAY_CONDOMINIO}
+      ${STR_DISPLAY_PRODUCTO}
   }
 `;
 
 export const ACTUALIZAR_CONDOMINIO = `
   mutation updateCondominio($id: ID!, $input: CondominioInput!) {
     updateCondominio(id: $id, input: $input) 
-      ${STR_DISPLAY_CONDOMINIO}
+      ${STR_DISPLAY_PRODUCTO}
   }
 `;
 
 export const ACTUALIZAR_CONDOMINIO_ACTIVE = `
   mutation updateCondominioActive($id: ID!, $active: Boolean) {
     updateCondominioActive(id: $id, active: $active)
-      ${STR_DISPLAY_CONDOMINIO}
+      ${STR_DISPLAY_PRODUCTO}
   }
 `;
 
 export const ELIMINAR_CONDOMINIO = `
   mutation removeCondominio($id: ID!) {
     removeCondominio(id: $id)
-    ${STR_DISPLAY_CONDOMINIO}
+    ${STR_DISPLAY_PRODUCTO}
   }
 `;
 

@@ -9,8 +9,8 @@ import { useSEOTitle } from '../../hooks/useSeoPage';
 import { FormLogin } from './components/FormLogin';
 
 const initialValues: any = {
-  nickName: 'pedro',
-  password: '123456',
+  nickName: '',
+  password: '',
 };
 
 export const LoginPage = () => {
@@ -22,12 +22,12 @@ export const LoginPage = () => {
 
   const handleSucces = (value: any): { success: boolean; text: string } => {
     const { nickName, password } = value;
-    // const { data, errors, loading } = useActionGQL(AUTH_USER, { input: { nickName, password } });
+
     fetchgql(AUTH_USER, { input: { nickName, password } }, '')
       .then(({ data: { authenticateToken } }) => {
         const { token } = authenticateToken;
         doLogin(token);
-        routNavegate('/admin');
+        routNavegate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -35,34 +35,6 @@ export const LoginPage = () => {
 
     return { success: true, text: '' };
   };
-  // useSEOMeta({
-  //   name: 'description',
-  //   description: 'NUESTRA UBICACION DIRECCION, TELEFONO, MAPA Y CONTACTO',
-  // });
-
-  // const handleGoogleAuthentication = async () => {
-  //   try {
-  //     const { user } = await googleAuthPopup();
-  //     const { displayName, email, uid } = user;
-  //     doLogin({ name: displayName!, email: email!, uid });
-  //   } catch (Errorf) {}
-  // };
-
-  // const handleFacebookAuthentication = async () => {
-  //   try {
-  //     const { user } = await facebookAuthPopup();
-  //     const { displayName, email, uid } = user;
-  //     doLogin({ name: displayName!, email: email!, uid });
-  //   } catch (Errorf) {}
-  // };
-
-  // const formMessage = (iconSw: SweetAlertIcon, title: string, message: string) => {
-  //   Swal2.fire({
-  //     icon: iconSw,
-  //     title: `<h1 class='text-3xl text-purple-850'>${title}</h1>`,
-  //     html: `<p class='text-xl'>${message}</p>`,
-  //   });
-  // };
 
   return (
     <div>

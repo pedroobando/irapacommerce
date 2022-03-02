@@ -25,7 +25,8 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
   const { resetForm, handleSubmit, errors, touched, getFieldProps, handleReset } = useFormik({
     initialValues: { ...initValues },
     onSubmit: (values) => {
-      const retSuccess = handleSucces({ ...values });
+      const nick = values.nickName.trim().toLowerCase();
+      const retSuccess = handleSucces({ ...values, nickName: nick });
       if (!retSuccess.success) {
         setErrorMessage({ ...retSuccess });
       } else {
