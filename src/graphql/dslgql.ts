@@ -26,34 +26,34 @@ export const AUTH_REVALIDATE = `
   ${AUTH_REVALIDATE_STR}
 `;
 
-const STR_DISPLAY_USUARIO = `{
+const STR_DISPLAY_USER = `{
   id
-  name
-  email
+  nickName
+  displayName
 }`;
 
-export const OBTENER_USUARIO = `
+export const GET_USER = `
   query getUser {
     getUser
-      ${STR_DISPLAY_USUARIO}
+      ${STR_DISPLAY_USER}
   }
 `;
 
-export const OBTENER_USUARIOS = `
+export const GET_USERS = `
   query getUsers {
     getUsers
-      ${STR_DISPLAY_USUARIO}
+      ${STR_DISPLAY_USER}
   }
 `;
 
-export const NUEVO_USUARIO = `
+export const NEW_USER = `
   mutation newUser($input: UserInput!) {
     newUser(input: $input)
-      ${STR_DISPLAY_USUARIO}
+      ${STR_DISPLAY_USER}
   }
 `;
 
-const STR_DISPLAY_PRODUCTO = `{
+const STR_DISPLAY_PRODUCT = `{
   id
   code
   productName
@@ -64,97 +64,41 @@ const STR_DISPLAY_PRODUCTO = `{
   updated_at
 }`;
 
-const STR_DISPLAY_COINTYPES = `{
-  id
-  coinTypeName
-  symbol
-  active
-}`;
-
 export const GET_PRODUCTS = `
   query getProducts {
     getProducts
-      ${STR_DISPLAY_PRODUCTO}
-  }
-`;
+      ${STR_DISPLAY_PRODUCT}
+  }`;
 
-export const OBTENER_UNCONDOMINIO = `
-  query getCondominio($id:ID!) {
-    getCondominio(id:$id)
-      ${STR_DISPLAY_PRODUCTO}
-  }
-`;
+export const GET_PRODUCT = `
+  query getProduct($productId:ID!) {
+    getProduct(productId:$productId)
+      ${STR_DISPLAY_PRODUCT}
+  }`;
 
-export const OBTENER_UNCONDOMINIO_COINTYPE = `
-  query getCondominioCoinType($id: ID!,$condid: ID!,$active:Boolean) {
-    getCondominio(id: $id) 
-      ${STR_DISPLAY_PRODUCTO}
-    
-    getCoinTypes(condid: $condid, active: $active)
-      ${STR_DISPLAY_COINTYPES}
-  }
-`;
+export const NEW_PRODUCT = `
+  mutation newProduct($input: ProductInput!) {
+    newProduct(input: $input)
+      ${STR_DISPLAY_PRODUCT}
+  }`;
 
-export const NUEVO_CONDOMINIO = `
-  mutation newCondominio($input: CondominioInput!) {
-    newCondominio(input: $input) 
-      ${STR_DISPLAY_PRODUCTO}
-  }
-`;
-
-export const ACTUALIZAR_CONDOMINIO = `
-  mutation updateCondominio($id: ID!, $input: CondominioInput!) {
-    updateCondominio(id: $id, input: $input) 
-      ${STR_DISPLAY_PRODUCTO}
-  }
+export const UPD_PRODUCT = `
+  mutation updProduct($productId: ID!, $input: ProductInput!) {
+    updProduct(productId: $productId, input: $input)
+    ${STR_DISPLAY_PRODUCT}
+}
 `;
 
 export const ACTUALIZAR_CONDOMINIO_ACTIVE = `
   mutation updateCondominioActive($id: ID!, $active: Boolean) {
     updateCondominioActive(id: $id, active: $active)
-      ${STR_DISPLAY_PRODUCTO}
+      ${STR_DISPLAY_PRODUCT}
   }
 `;
 
-export const ELIMINAR_CONDOMINIO = `
-  mutation removeCondominio($id: ID!) {
-    removeCondominio(id: $id)
-    ${STR_DISPLAY_PRODUCTO}
-  }
-`;
-
-export const OBTENER_COINTYPES = `
-  query getCoinTypes($condid: ID!, $active: Boolean) {
-    getCoinTypes(condid: $condid, active: $active) 
-      ${STR_DISPLAY_COINTYPES}
-  }
-`;
-
-export const OBTENER_UNCOINTYPE = `
-  query getCoinType($id: ID!) {
-    getCoinType(id: $id) 
-      ${STR_DISPLAY_COINTYPES}
-  }
-`;
-
-export const NUEVO_COINTYPE = `
-  mutation newCoinType($input: CoinTypeInput!) {
-    newCoinType(input: $input)
-      ${STR_DISPLAY_COINTYPES} 
-  }
-`;
-
-export const ACTUALIZAR_COINTYPE = `
-  mutation updateCoinType($id: ID!, $input: CoinTypeInput!) {
-    updateCoinType(id: $id, input: $input) 
-      ${STR_DISPLAY_COINTYPES}
-  }
-`;
-
-export const ELIMINAR_COINTYPE = `
-  mutation removeCoinType($id: ID!) {
-    removeCoinType(id: $id) 
-      ${STR_DISPLAY_COINTYPES}
+export const DEL_PRODUCT = `
+  mutation DelProduct($productId: ID!) {
+    delProduct(productId: $productId)
   }
 `;
 

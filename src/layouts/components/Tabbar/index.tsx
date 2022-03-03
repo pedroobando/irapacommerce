@@ -21,7 +21,7 @@ const Tabbar = ({ navigationData }: iTabbarProps) => {
     switch (item) {
       case 'Home':
         return <AiFillHome />;
-      case 'Discover':
+      case 'Producto':
         return <AiFillCompass />;
       case 'Store':
         return <BsFillBagFill />;

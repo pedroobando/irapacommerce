@@ -54,8 +54,8 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
       noValidate
       onSubmit={handleSubmit}
       onReset={handleReset}
-      className="border-2 border-solid border-slate-500 mx-auto w-11/12 flex-1 p-6 lg:w-4/5 rounded-lg shadow-xl">
-      <h3 className="uppercase text-gray-500 font-bold text-center text-2xl mb-2">
+      className="flex-1 w-11/12 p-6 mx-auto border-2 border-solid rounded-lg shadow-xl border-slate-500 lg:w-4/5">
+      <h3 className="mb-2 text-2xl font-bold text-center text-gray-500 uppercase">
         Login o Acceso
       </h3>
       <hr />
@@ -69,7 +69,7 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
         {errorMessage.text}
       </div>
 
-      <div className="mb-3 w-full py-2">
+      <div className="w-full py-2 mb-3">
         <label htmlFor="nickName" className="text-base uppercase">
           Usuario
         </label>
@@ -89,7 +89,7 @@ export const FormLogin = ({ initValues, handleSucces }: iFormLoginProps) => {
         )}
       </div>
 
-      <div className="mb-3 w-full py-2">
+      <div className="w-full py-2 mb-3">
         <label htmlFor="password" className="uppercase">
           Contraseña o password
         </label>
