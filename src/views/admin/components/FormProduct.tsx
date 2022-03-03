@@ -45,17 +45,13 @@ export const FormProduct = ({
       switch (formStatus) {
         case 2:
           handleNew({ ...values }).then((retSuccess) => {
-            if (!retSuccess.success) {
-              setErrorMessage({ ...retSuccess });
-            }
+            if (!retSuccess.success) setErrorMessage({ ...retSuccess });
           });
           break;
 
         case 3:
           handleUpd({ ...values }).then((retSuccess) => {
-            if (!retSuccess.success) {
-              setErrorMessage({ ...retSuccess });
-            }
+            if (!retSuccess.success) setErrorMessage({ ...retSuccess });
           });
           break;
 
@@ -73,8 +69,12 @@ export const FormProduct = ({
         .required('El nombre del producto es requerido')
         .min(5, 'Debe tener minimo 5 caracteres'),
 
-      cost: Yup.number().min(0, 'El costo del producto debe ser igual o mayor a cero'),
-      price: Yup.number().moreThan(0, 'El precio del producto debe ser mayor que cero'),
+      cost: Yup.number()
+        .required('El costo del producto es requerido')
+        .positive('Debe ser un numero mayor que cero'),
+      price: Yup.number()
+        .required('El precio del producto es requerido')
+        .positive('Debe ser un numero mayor que cero'),
     }),
   });
 
